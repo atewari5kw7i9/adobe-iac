@@ -1,4 +1,4 @@
 region = "us-east-1"
-label_inbound  = "inbound"
-label_outbound  = "outbound"
-app    = "adobe-app"
+label_inbound  = "adobe-inbound"
+label_outbound  = "adobe-outbound"
+app    = "logs"

@@ -23,7 +23,7 @@ resource "aws_s3_bucket" "app_inbound" {
     Name = "Adobe"
   }
 
-  bucket = "${var.app}.${var.label_inbound}"
+  bucket = "${var.app}-${var.label_inbound}"
   acl    = "private"
   server_side_encryption_configuration {
     rule {
@@ -43,7 +43,7 @@ resource "aws_s3_bucket" "app_outbound" {
     Name = "Adobe"
   }
 
-  bucket = "${var.app}.${var.label_outbound}"
+  bucket = "${var.app}-${var.label_outbound}"
   acl    = "private"
   server_side_encryption_configuration {
     rule {
