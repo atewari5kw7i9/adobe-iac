@@ -20,10 +20,3 @@ output "s3_bucket_name" {
   value = aws_s3_bucket.terraform_state.bucket
 }
 
-terraform {
-  backend "s3" {
-    bucket = "adobe-tfstate"
-    key    = "tfstate"
-    region = "us-east-1"
-  }
-}
