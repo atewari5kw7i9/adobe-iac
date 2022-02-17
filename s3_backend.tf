@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "adobe-circle-ci-backend"
+  bucket = "adobe-tfstate"
   # Enable versioning so we can see the full revision history of our
   # state files
   force_destroy = true
