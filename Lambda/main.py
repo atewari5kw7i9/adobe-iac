@@ -20,7 +20,7 @@ def lambda_handler(event, context):
 
     bucket_name_src = event["Records"][0]["s3"]["bucket"]["name"]
     s3_file_name_src = unquote_plus(event["Records"][0]["s3"]["object"]["key"])
-    input_path = "{}//{}/{}".format("s3://", bucket_name_src, s3_file_name_src)
+    input_path = "{}//{}/{}".format("s3:", bucket_name_src, s3_file_name_src)
     emr = boto3.client('emr')
     job_parameters = {
         'job_name': job_name,
