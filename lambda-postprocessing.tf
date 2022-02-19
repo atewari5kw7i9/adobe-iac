@@ -30,7 +30,7 @@ resource "aws_lambda_function" "adobe_post_data_processor" {
 resource "aws_s3_bucket_notification" "stage_bucket_notification" {
   bucket   = aws_s3_bucket.app_outbound.id
   lambda_function {
-    lambda_function_arn = aws_lambda_function.adobe_data_processor.arn
+    lambda_function_arn = aws_lambda_function.adobe_post_data_processor.arn
     events              = ["s3:ObjectCreated:*"]
     filter_prefix       = "data/raw"
     filter_suffix       = ".csv"
