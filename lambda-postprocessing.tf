@@ -8,7 +8,7 @@ resource "aws_lambda_permission" "allow_stage_bucket" {
 data "archive_file" "init_postprocess" {
   type        = "zip"
   source_dir  = "Lambda_postprocess"
-  output_path = "outputs/deployment_posta.zip"
+  output_path = "outputs/deployment_posts.zip"
 }
 
 resource "aws_lambda_function" "adobe_post_data_processor" {
