@@ -25,7 +25,7 @@ resource "aws_lambda_function" "adobe_data_processor" {
       job-name                   = "job_transform",
       code-artifacts             = "s3://adobe-code-artifacts",
       jar-file                   = "s3://us-east-1.elasticmapreduce/libs/script-runner/script-runner.jar",
-      version                    = "latest",
+      version                    = "latest"
     }
   }
   handler  = "main.lambda_handler"
