@@ -18,7 +18,7 @@ resource "aws_lambda_function" "adobe_data_processor" {
   timeout       = 300
   environment {
     variables = {
-      emr_cluster_id   = "abc"
+      emr_cluster_id   = "j-1P779IL7I2AH0"
       output_path      = "s3://logs-adobe-outbound/data/raw"
       executor_memory  = "1G"
       driver_memory    = "2G"
@@ -38,8 +38,9 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
     lambda_function_arn = aws_lambda_function.adobe_data_processor.arn
     events              = ["s3:ObjectCreated:*"]
     filter_prefix       = "data/"
-    filter_suffix       = ".log"
+    filter_suffix       = ".tsv"
   }
 
   depends_on = [aws_lambda_permission.allow_bucket]
 }
+
