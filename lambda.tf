@@ -19,9 +19,9 @@ resource "aws_lambda_function" "adobe_data_processor" {
   environment {
     variables = {
       emr_cluster_id   = "abc"
-      output_path      = "s3://logs-adobe-outbound/data"
+      output_path      = "s3://logs-adobe-outbound/data/raw"
       executor_memory  = "1G"
-      driver_memory    = "1G"
+      driver_memory    = "2G"
       job_name         = "job_transform"
       code_artifacts   = "s3://adobe-code-artifacts"
       jar_file         = "s3://us-east-1.elasticmapreduce/libs/script-runner/script-runner.jar"

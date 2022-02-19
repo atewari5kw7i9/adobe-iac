@@ -1,22 +1,33 @@
 import boto3
 from os.path import join
 import uuid
-
+import os
+from urllib.parse import unquote_plus
 
 
 def lambda_handler(event, context):
-    emr = boto3.client('emr')
+    emr_cluster_id = os.environ['emr_cluster_id']
+    output_path = os.environ['output_path']
+    executor_memory = os.environ['executor_memory']
+    driver_memory = os.environ['driver_memory']
+    job_name = os.environ['job_name']
+    code_artifacts = os.environ['code_artifacts']
+    jar_file = boto3.client('jar_file')
     version = 'latest'
-    main_path = join('s3://adobe-code-artifacts', version, 'main.py')
-    modules_path = join('s3://adobe-code-artifacts', version, 'src.zip')
+    main_path = join(code_artifacts, version, 'main.py')
+    modules_path = join(code_artifacts, version, 'src.zip')
 
+    bucket_name_src = event["Records"][0]["s3"]["bucket"]["name"]
+    s3_file_name_src = unquote_plus(event["Records"][0]["s3"]["object"]["key"])
+    input_path = "{}/{}".format(bucket_name_src, s3_file_name_src)
+    emr = boto3.client('emr')
     job_parameters = {
-        'job_name': 'job_transform',
-        'input_path': 's3://logs-adobe-inbound/adobe-data.tsv',
-        'output_path': 's3://logs-adobe-outbound/data1',
+        'job_name': job_name,
+        'input_path': input_path,
+        'output_path': output_path,
         'spark_config': {
-            '--executor-memory': '1G',
-            '--driver-memory': '2G'
+            '--executor-memory': executor_memory,
+            '--driver-memory': driver_memory
         }
     }
 
@@ -32,10 +43,10 @@ def lambda_handler(event, context):
         "Name": emr_job_name,
         'ActionOnFailure': 'CONTINUE',
         'HadoopJarStep': {
-            'Jar': 's3://us-east-1.elasticmapreduce/libs/script-runner/script-runner.jar',
+            'Jar': jar_file,
             'Args': step_args
         }
     }
 
-    action = emr.add_job_flow_steps(JobFlowId='j-1OY5F29CYM6O0', Steps=[step])
+    action = emr.add_job_flow_steps(JobFlowId=emr_cluster_id, Steps=[step])
     return action
