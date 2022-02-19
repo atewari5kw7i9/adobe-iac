@@ -38,7 +38,7 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
     lambda_function_arn = aws_lambda_function.adobe_data_processor.arn
     events              = ["s3:ObjectCreated:*"]
     filter_prefix       = "data/"
-    filter_suffix       = ".tsv"
+    filter_suffix       = "*.tsv"
   }
 
   depends_on = [aws_lambda_permission.allow_bucket]
