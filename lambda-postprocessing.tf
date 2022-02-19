@@ -8,7 +8,7 @@ resource "aws_lambda_permission" "allow_stage_bucket" {
 data "archive_file" "init_postprocess" {
   type        = "zip"
   source_dir  = "Lambda_postprocess"
-  output_path = "outputs/lambdadeployment_postprocess.zip"
+  output_path = "outputs/deployment_post.zip"
 }
 
 resource "aws_lambda_function" "adobe_post_data_processor" {
@@ -19,12 +19,13 @@ resource "aws_lambda_function" "adobe_post_data_processor" {
   environment {
     variables = {
       emr_cluster_id   = "j-1P779IL7I2AH0"
-      output_path      = "s3://logs-adobe-outbound/data/postprocess"
+      output_bucket    = "s3://logs-adobe-outbound"
+      output_prefix    = "data/postprocess"
     }
   }
   handler       = "main.lambda_handler"
   runtime       = "python3.7"
-  filename      = "outputs/lambdadeployment_postprocess.zip"
+  filename      = "outputs/deployment_post.zip"
 }
 
 resource "aws_s3_bucket_notification" "stage_bucket_notification" {
@@ -33,7 +34,6 @@ resource "aws_s3_bucket_notification" "stage_bucket_notification" {
     lambda_function_arn = aws_lambda_function.adobe_post_data_processor.arn
     events              = ["s3:ObjectCreated:*"]
     filter_prefix       = "data/raw"
-    filter_suffix       = ".csv"
   }
 
   depends_on = [aws_lambda_permission.allow_stage_bucket]
