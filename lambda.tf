@@ -12,7 +12,7 @@ data "archive_file" "init" {
 }
 
 resource "aws_lambda_function" "adobe_data_processor" {
-  function_name = adobe_data_processor
+  function_name = "adobe_data_processor"
   role          = "arn:aws:iam::143114426560:role/service-role/test-role-fd1arkpr"
   memory_size   = 256
   timeout       = 300
