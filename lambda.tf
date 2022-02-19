@@ -16,6 +16,17 @@ resource "aws_lambda_function" "adobe_data_processor" {
   role          = "arn:aws:iam::143114426560:role/service-role/test-role-fd1arkpr"
   memory_size   = 256
   timeout       = 300
+  environment {
+    variables = {
+      emr_cluster_id   = "abc",
+      output_path      = "s3://logs-adobe-outbound/data",
+      executor-memory  = "1G",
+      driver-memory    = "1G",
+      job-name         = "job_transform",
+      code-artifacts   = "s3://adobe-code-artifacts",
+      jar-file         = "s3://us-east-1.elasticmapreduce/libs/script-runner/script-runner.jar"
+    }
+  }
   handler       = "main.lambda_handler"
   runtime       = "python3.7"
   filename      = "outputs/lambdadeployment.zip"
