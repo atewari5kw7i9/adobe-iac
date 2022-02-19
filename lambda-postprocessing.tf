@@ -8,7 +8,7 @@ resource "aws_lambda_permission" "allow_stage_bucket" {
 data "archive_file" "init_postprocess" {
   type        = "zip"
   source_dir  = "Lambda_postprocess"
-  output_path = "outputs/deployment_post.zip"
+  output_path = "outputs/deployment_posta.zip"
 }
 
 resource "aws_lambda_function" "adobe_post_data_processor" {
@@ -19,13 +19,13 @@ resource "aws_lambda_function" "adobe_post_data_processor" {
   environment {
     variables = {
       emr_cluster_id   = "j-1P779IL7I2AH0"
-      output_bucket    = "s3://logs-adobe-outbound"
+      output_bucket    = "logs-adobe-outbound"
       output_prefix    = "data/postprocess"
     }
   }
   handler       = "main.lambda_handler"
   runtime       = "python3.7"
-  filename      = "outputs/deployment_post.zip"
+  filename      = "outputs/deployment_posts.zip"
 }
 
 resource "aws_s3_bucket_notification" "stage_bucket_notification" {
