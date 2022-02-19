@@ -12,7 +12,8 @@ def lambda_handler(event, context):
     driver_memory = os.environ['driver_memory']
     job_name = os.environ['job_name']
     code_artifacts = os.environ['code_artifacts']
-    jar_file = boto3.client('jar_file')
+    jar_file = os.environ['jar_file']
+
     version = 'latest'
     main_path = join(code_artifacts, version, 'main.py')
     modules_path = join(code_artifacts, version, 'src.zip')
