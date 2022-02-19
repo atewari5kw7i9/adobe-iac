@@ -30,7 +30,7 @@ resource "aws_lambda_function" "adobe_data_processor" {
   }
   handler  = "main.lambda_handler"
   runtime  = "python3.7"
-  filename = "outputs/lambdadeployment.zip"
+  filename = "Lambda/main.py"
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
