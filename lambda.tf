@@ -22,8 +22,6 @@ resource "aws_lambda_function" "adobe_data_processor" {
       output_path      = "s3://logs-adobe-outbound/data"
       executor-memory  = "1G"
       driver-memory    = "1G"
-      job-name         = "job_transform"
-      code-artifacts   = "s3://adobe-code-artifacts"
     }
   }
   handler       = "main.lambda_handler"
