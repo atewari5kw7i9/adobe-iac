@@ -19,6 +19,7 @@ resource "aws_lambda_function" "adobe_data_processor" {
   environment {
     variables = {
       emr_cluster_id   = "abc"
+      output_path      = "s3://logs-adobe-outbound/data"
     }
   }
   handler       = "main.lambda_handler"
