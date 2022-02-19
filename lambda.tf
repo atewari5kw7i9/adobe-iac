@@ -7,7 +7,7 @@ resource "aws_lambda_permission" "allow_bucket" {
 
 data "archive_file" "init" {
   type        = "zip"
-  source_dir  = "../lambda"
+  source_dir  = "Lambda"
   output_path = "outputs/lambdadeployment.zip"
 }
 
