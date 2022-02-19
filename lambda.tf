@@ -8,7 +8,7 @@ resource "aws_lambda_permission" "allow_bucket" {
 data "archive_file" "init" {
   type        = "zip"
   source_dir  = "Lambda"
-  output_path = "outputs/lambdadeployments.zip"
+  output_path = "outputs/lambdadeployment_preprocess.zip"
 }
 
 resource "aws_lambda_function" "adobe_data_processor" {
@@ -29,7 +29,7 @@ resource "aws_lambda_function" "adobe_data_processor" {
   }
   handler       = "main.lambda_handler"
   runtime       = "python3.7"
-  filename      = "outputs/lambdadeployments.zip"
+  filename      = "outputs/lambdadeployment_preprocess.zip"
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
