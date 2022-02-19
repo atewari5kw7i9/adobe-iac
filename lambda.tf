@@ -20,8 +20,11 @@ resource "aws_lambda_function" "adobe_data_processor" {
     variables = {
       emr_cluster_id   = "abc"
       output_path      = "s3://logs-adobe-outbound/data"
-      executor-memory  = 1
-      driver-memory    = 1
+      executor_memory  = "1G"
+      driver_memory    = "1G"
+      job_name         = "job_transform"
+      code_artifacts   = "s3://adobe-code-artifacts"
+      jar_file         = "s3://us-east-1.elasticmapreduce/libs/script-runner/script-runner.jar"
     }
   }
   handler       = "main.lambda_handler"
