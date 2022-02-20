@@ -2,6 +2,7 @@ import boto3
 from datetime import datetime
 from urllib.parse import unquote_plus
 import os
+import json
 
 def lambda_handler(event, context):
 
@@ -17,7 +18,13 @@ def lambda_handler(event, context):
 
     output_bucket = os.environ["output_bucket"]
     output_prefix = os.environ["output_prefix"]
+    sns_arn = os.environ["sns_arn"]
     destination_key_name = "{}/{}_{}".format(output_prefix, todays_dt, "SearchKeywordPerformance.tab")
     s3.meta.client.copy(copy_source, output_bucket, destination_key_name)
-    resp = {"status": 0, "Desc": "file moved successfully"}
+    resp = {"status": 0, "Desc": destination_key_name + " file copied successfully"}
+    client = boto3.client('sns')
+    response = client.publish(
+        TargetArn=sns_arn,
+        Message=json.dumps(resp)
+    )
     return resp

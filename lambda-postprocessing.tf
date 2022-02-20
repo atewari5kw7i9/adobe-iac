@@ -5,11 +5,11 @@ resource "aws_lambda_permission" "allow_stage_bucket" {
   source_arn    = aws_s3_bucket.app_outbound.arn
 }
 
-data "archive_file" "init_postprocess" {
-  type        = "zip"
-  source_dir  = "Lambda_postprocess"
-  output_path = "outputs/deployment_post.zip"
-}
+//data "archive_file" "init_postprocess" {
+//  type        = "zip"
+//  source_dir  = "Lambda_postprocess"
+//  output_path = "outputs/deployment_post.zip"
+//}
 
 resource "aws_lambda_function" "adobe_post_data_processor" {
   function_name = "adobe_post_data_processor"
@@ -21,11 +21,12 @@ resource "aws_lambda_function" "adobe_post_data_processor" {
       emr_cluster_id   = "j-1P779IL7I2AH0"
       output_bucket    = "logs-adobe-outbound"
       output_prefix    = "data/postprocess"
+      sns_arn          = aws_sns_topic.email_updates.arn
     }
   }
   handler       = "main.lambda_handler"
   runtime       = "python3.7"
-  filename      = "outputs/deployment_post.zip"
+  filename      = "Lambda_postprocess/main.py"
 }
 
 resource "aws_s3_bucket_notification" "stage_bucket_notification" {
