@@ -8,7 +8,7 @@ resource "aws_lambda_permission" "allow_bucket" {
 data "archive_file" "init" {
   type        = "zip"
   source_dir  = "Lambda"
-  output_path = "outputs/deployment_pres.zip"
+  output_path = "outputs/deployment_pre.zip"
 }
 
 resource "aws_lambda_function" "adobe_data_processor" {
@@ -18,7 +18,7 @@ resource "aws_lambda_function" "adobe_data_processor" {
   timeout       = 300
   environment {
     variables = {
-      emr_cluster_id   = "j-3364PO6XRC81A"
+      emr_cluster_id   = "j-2DCANH2ISI4RZ"
       output_path      = "s3://logs-adobe-outbound/data/raw"
       executor_memory  = "1G"
       driver_memory    = "2G"
@@ -29,7 +29,7 @@ resource "aws_lambda_function" "adobe_data_processor" {
   }
   handler       = "main.lambda_handler"
   runtime       = "python3.7"
-  filename      = "outputs/deployment_pres.zip"
+  filename      = "outputs/deployment_pre.zip"
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
