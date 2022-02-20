@@ -18,7 +18,7 @@ resource "aws_lambda_function" "adobe_data_processor" {
   timeout       = 300
   environment {
     variables = {
-      emr_cluster_id   = "j-1P779IL7I2AH0"
+      emr_cluster_id   = "j-3364PO6XRC81A"
       output_path      = "s3://logs-adobe-outbound/data/raw"
       executor_memory  = "1G"
       driver_memory    = "2G"
