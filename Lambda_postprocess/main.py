@@ -17,7 +17,7 @@ def lambda_handler(event, context):
 
     output_bucket = os.environ["output_bucket"]
     output_prefix = os.environ["output_prefix"]
-    destination_key_name = "{}/{}_{}".format(output_prefix, todays_dt, "_SearchKeywordPerformance.tab")
+    destination_key_name = "{}/{}_{}".format(output_prefix, todays_dt, "SearchKeywordPerformance.tab")
     s3.meta.client.copy(copy_source, output_bucket, destination_key_name)
     resp = {"status": 0, "Desc": "file moved successfully"}
     return resp
