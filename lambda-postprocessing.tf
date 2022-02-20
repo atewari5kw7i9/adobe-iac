@@ -34,7 +34,8 @@ resource "aws_s3_bucket_notification" "stage_bucket_notification" {
   lambda_function {
     lambda_function_arn = aws_lambda_function.adobe_post_data_processor.arn
     events              = ["s3:ObjectCreated:*"]
-    filter_prefix       = "data/raw"
+    filter_prefix       = "data/raw/"
+    filter_suffix       = ".csv"
   }
 
   depends_on = [aws_lambda_permission.allow_stage_bucket]

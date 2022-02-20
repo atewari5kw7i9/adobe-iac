@@ -1,6 +1,5 @@
 import boto3
 from os.path import join
-import uuid
 import os
 from urllib.parse import unquote_plus
 
@@ -38,8 +37,7 @@ def lambda_handler(event, context):
         main_path, str(job_parameters)
     ]
 
-    rand_str = str(uuid.uuid1())
-    emr_job_name = job_parameters['job_name'] + rand_str
+    emr_job_name = job_parameters['job_name']
     step = {
         "Name": emr_job_name,
         'ActionOnFailure': 'CONTINUE',
