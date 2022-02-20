@@ -5,11 +5,11 @@ resource "aws_lambda_permission" "allow_stage_bucket" {
   source_arn    = aws_s3_bucket.app_outbound.arn
 }
 
-//data "archive_file" "init_postprocess" {
-//  type        = "zip"
-//  source_dir  = "Lambda_postprocess"
-//  output_path = "outputs/deployment_post.zip"
-//}
+data "archive_file" "init_postprocess" {
+  type        = "zip"
+  source_dir  = "Lambda_postprocess"
+  output_path = "outputs/deployment_postprocess.zip"
+}
 
 resource "aws_lambda_function" "adobe_post_data_processor" {
   function_name = "adobe_post_data_processor"
@@ -26,7 +26,7 @@ resource "aws_lambda_function" "adobe_post_data_processor" {
   }
   handler       = "main.lambda_handler"
   runtime       = "python3.7"
-  filename      = "Lambda_postprocess/main.py"
+  filename      = "outputs/deployment_postprocess.zip"
 }
 
 resource "aws_s3_bucket_notification" "stage_bucket_notification" {

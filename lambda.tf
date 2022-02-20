@@ -5,11 +5,11 @@ resource "aws_lambda_permission" "allow_bucket" {
   source_arn    = aws_s3_bucket.app_inbound.arn
 }
 
-//data "archive_file" "init" {
-//  type        = "zip"
-//  source_dir  = "Lambda"
-//  output_path = "outputs/deployment_pre.zip"
-//}
+data "archive_file" "init" {
+  type        = "zip"
+  source_dir  = "Lambda"
+  output_path = "outputs/deployment_preprocess.zip"
+}
 
 resource "aws_lambda_function" "adobe_data_processor" {
   function_name = "adobe_data_processor"
@@ -29,7 +29,7 @@ resource "aws_lambda_function" "adobe_data_processor" {
   }
   handler       = "main.lambda_handler"
   runtime       = "python3.7"
-  filename      = "Lambda/main.py"
+  filename      = "outputs/deployment_preprocess.zip"
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
